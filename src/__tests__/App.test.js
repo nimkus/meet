@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import React from 'react';
 import App from './../App';
 
@@ -14,5 +14,11 @@ describe('<App /> component', () => {
 
   test('render CitySearch', () => {
     expect(AppDOM.querySelector('#city-search')).toBeInTheDocument();
+  });
+
+  test('renders the NumberOfEvents component', () => {
+    const { container } = render(<App />);
+    const numberOfEventsComponent = container.querySelector('#number-of-events');
+    expect(numberOfEventsComponent).toBeInTheDocument();
   });
 });
