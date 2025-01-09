@@ -32,7 +32,7 @@ describe('<Event /> component', () => {
   });
 
   test('renders the "Show Details" button with the correct title', () => {
-    const buttonElement = screen.getByRole('button', { name: 'Expand' });
+    const buttonElement = screen.getByRole('button', { name: 'show details' });
     expect(buttonElement).toBeInTheDocument();
   });
 
@@ -44,7 +44,7 @@ describe('<Event /> component', () => {
   });
 
   test('shows event details when the "Show Details" button is clicked', () => {
-    const buttonElement = screen.getByRole('button', { name: 'Expand' });
+    const buttonElement = screen.getByRole('button', { name: 'show details' });
     fireEvent.click(buttonElement);
 
     const detailsElement = screen.getByText((content, element) => {
@@ -52,11 +52,11 @@ describe('<Event /> component', () => {
     });
     expect(detailsElement).toBeInTheDocument();
 
-    expect(buttonElement).toHaveTextContent('Collapse');
+    expect(buttonElement).toHaveTextContent('hide details');
   });
 
   test('hides event details when the "Hide Details" button is clicked', () => {
-    const buttonElement = screen.getByRole('button', { name: 'Expand' });
+    const buttonElement = screen.getByRole('button', { name: 'show details' });
     fireEvent.click(buttonElement);
 
     const detailsElement = screen.getByText((content, element) => {
@@ -72,6 +72,6 @@ describe('<Event /> component', () => {
       })
     ).not.toBeInTheDocument();
 
-    expect(buttonElement).toHaveTextContent('Expand');
+    expect(buttonElement).toHaveTextContent('show details');
   });
 });
