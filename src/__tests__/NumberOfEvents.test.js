@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
+import App from '../App';
 import NumberOfEvents from '../components/NumberOfEvents';
 
 describe('<NumberOfEvents /> component', () => {
@@ -20,5 +21,30 @@ describe('<NumberOfEvents /> component', () => {
     const inputElement = screen.getByRole('spinbutton'); // ✅ Updated role
     fireEvent.change(inputElement, { target: { value: 10 } });
     expect(inputElement).toHaveValue(10);
+  });
+});
+
+describe('<NumberOfEvents /> integration', () => {
+  test('updates the number of events when the user changes the input value', async () => {
+    // Render the App component
+    render(<App />);
+
+    // Get the input field for specifying the number of events
+    const numberOfEventsInput = screen.getByRole('spinbutton');
+
+    // Check that the default value is 32
+    expect(numberOfEventsInput).toHaveValue(32);
+
+    // Simulate the user changing the input value to 10
+    fireEvent.change(numberOfEventsInput, { target: { value: 10 } });
+
+    // Check that the input field now has a value of 10
+    expect(numberOfEventsInput).toHaveValue(10);
+
+    // Get the list of events
+    const eventsList = screen.getAllByRole('listitem');
+
+    // Check that the number of events displayed matches the input value
+    expect(eventsList.length).toBe(10);
   });
 });

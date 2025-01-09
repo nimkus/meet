@@ -4,9 +4,11 @@ const NumberOfEvents = ({ updateEvents }) => {
   const [numberOfEvents, setNumberOfEvents] = useState(32);
 
   const handleInputChange = (e) => {
-    const value = e.target.value;
-    setNumberOfEvents(value);
-    updateEvents(value);
+    const value = Number(e.target.value);
+    if (value > 0) {
+      setNumberOfEvents(value);
+      updateEvents(value);
+    }
   };
 
   return (
