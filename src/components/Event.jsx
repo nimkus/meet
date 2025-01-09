@@ -17,7 +17,7 @@ const Event = ({ event }) => {
         </div>
       )}
 
-      <button onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? 'Collapse' : 'Expand'}</button>
+      <button onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? 'hide details' : 'show details'}</button>
     </li>
   );
 };
