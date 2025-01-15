@@ -1,25 +1,27 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import App from '../App';
 import NumberOfEvents from '../components/NumberOfEvents';
 
 describe('<NumberOfEvents /> component', () => {
   test('renders a spinbutton element', () => {
     render(<NumberOfEvents updateEvents={() => {}} />);
-    const inputElement = screen.getByRole('spinbutton'); // ✅ Updated role
+    const inputElement = screen.getByRole('spinbutton');
     expect(inputElement).toBeInTheDocument();
   });
 
   test('renders the default number of 32 events', () => {
     render(<NumberOfEvents updateEvents={() => {}} />);
-    const inputElement = screen.getByRole('spinbutton'); // ✅ Updated role
+    const inputElement = screen.getByRole('spinbutton');
     expect(inputElement).toHaveValue(32);
   });
 
   test('changes the value of the input field when user types', async () => {
     render(<NumberOfEvents updateEvents={() => {}} />);
-    const inputElement = screen.getByRole('spinbutton'); // ✅ Updated role
-    fireEvent.change(inputElement, { target: { value: 10 } });
+    const inputElement = screen.getByRole('spinbutton');
+    await act(async () => {
+      fireEvent.change(inputElement, { target: { value: 10 } });
+    });
     expect(inputElement).toHaveValue(10);
   });
 });
@@ -36,7 +38,9 @@ describe('<NumberOfEvents /> integration', () => {
     expect(numberOfEventsInput).toHaveValue(32);
 
     // Simulate the user changing the input value to 10
-    fireEvent.change(numberOfEventsInput, { target: { value: 10 } });
+    await act(async () => {
+      fireEvent.change(numberOfEventsInput, { target: { value: 10 } });
+    });
 
     // Check that the input field now has a value of 10
     expect(numberOfEventsInput).toHaveValue(10);

@@ -17,6 +17,13 @@ functions:
       - http:
           path: api/get-auth-url
           method: get
+          cors:
+            origins:
+              - '*'
+            headers:
+              - Content-Type
+              - Authorization
+            allowCredentials: true
   getAccessToken:
     handler: handler.getAccessToken
     events:
@@ -29,6 +36,7 @@ functions:
             headers:
               - Content-Type
               - Authorization
+            allowCredentials: true
   getCalendarEvents:
     handler: handler.getCalendarEvents
     events:
@@ -41,3 +49,4 @@ functions:
             headers:
               - Content-Type
               - Authorization
+            allowCredentials: true

@@ -6,18 +6,20 @@ const Event = ({ event }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <li>
+    <li className="event">
       <h2>{event.summary}</h2>
       <p>{event.location}</p>
       <p>{event.created}</p>
 
       {isExpanded && (
         <div>
-          <p>{event.description}</p>
+          <p className="details">{event.description}</p>
         </div>
       )}
 
-      <button onClick={() => setIsExpanded(!isExpanded)}>{isExpanded ? 'hide details' : 'show details'}</button>
+      <button className="details-btn" onClick={() => setIsExpanded(!isExpanded)}>
+        {isExpanded ? 'hide details' : 'show details'}
+      </button>
     </li>
   );
 };
