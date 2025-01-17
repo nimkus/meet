@@ -5,13 +5,24 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [error, setError] = useState(null);
+
+  // Define a regex pattern for allowed input
+  const cityPattern = /^[a-zA-Z\s]*$/; // Allow letters and spaces only
 
   const handleInputChanged = (event) => {
     const value = event.target.value;
+
+    // Validate the input against the regex pattern
+    if (!cityPattern.test(value)) {
+      setError('Invalid input: only letters and spaces are allowed.');
+      return;
+    }
+
+    setError(null); // Clear error if input is valid
+
     const filteredLocations = allLocations
-      ? allLocations.filter((location) => {
-          return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
-        })
+      ? allLocations.filter((location) => location.toUpperCase().indexOf(value.toUpperCase()) > -1)
       : [];
 
     setQuery(value);
@@ -39,6 +50,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         onFocus={() => setShowSuggestions(true)}
         onChange={handleInputChanged}
       />
+      {error && <p className="error">{error}</p>}
       {showSuggestions ? (
         <ul className="suggestions">
           {suggestions.map((suggestion) => {
