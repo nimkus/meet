@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const Event = ({ event }) => {
   if (!event) return null;
@@ -22,6 +23,15 @@ const Event = ({ event }) => {
       </button>
     </li>
   );
+};
+
+Event.propTypes = {
+  event: PropTypes.shape({
+    summary: PropTypes.string.isRequired,
+    location: PropTypes.string,
+    created: PropTypes.string.isRequired,
+    description: PropTypes.string,
+  }),
 };
 
 export default Event;

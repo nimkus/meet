@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 const CitySearch = ({ allLocations, setCurrentCity }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -26,7 +27,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
 
   useEffect(() => {
     setSuggestions(allLocations);
-  }, [`${allLocations}`]);
+  }, [allLocations]);
 
   return (
     <div id="city-search">
@@ -54,6 +55,11 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
       ) : null}
     </div>
   );
+};
+
+CitySearch.propTypes = {
+  allLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
+  setCurrentCity: PropTypes.func.isRequired,
 };
 
 export default CitySearch;

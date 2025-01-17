@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const NumberOfEvents = ({ updateEvents }) => {
   const [numberOfEvents, setNumberOfEvents] = useState(32);
@@ -23,6 +24,10 @@ const NumberOfEvents = ({ updateEvents }) => {
       />
     </div>
   );
+};
+
+NumberOfEvents.propTypes = {
+  updateEvents: PropTypes.func.isRequired,
 };
 
 export default NumberOfEvents;
