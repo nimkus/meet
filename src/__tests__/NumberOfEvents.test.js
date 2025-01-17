@@ -5,19 +5,19 @@ import NumberOfEvents from '../components/NumberOfEvents';
 
 describe('<NumberOfEvents /> component', () => {
   test('renders a spinbutton element', () => {
-    render(<NumberOfEvents updateEvents={() => {}} />);
+    render(<NumberOfEvents updateEvents={() => {}} setErrorAlert={() => {}} />);
     const inputElement = screen.getByRole('spinbutton');
     expect(inputElement).toBeInTheDocument();
   });
 
   test('renders the default number of 32 events', () => {
-    render(<NumberOfEvents updateEvents={() => {}} />);
+    render(<NumberOfEvents updateEvents={() => {}} setErrorAlert={() => {}} />);
     const inputElement = screen.getByRole('spinbutton');
     expect(inputElement).toHaveValue(32);
   });
 
   test('changes the value of the input field when user types', async () => {
-    render(<NumberOfEvents updateEvents={() => {}} />);
+    render(<NumberOfEvents updateEvents={() => {}} setErrorAlert={() => {}} />);
     const inputElement = screen.getByRole('spinbutton');
     await act(async () => {
       fireEvent.change(inputElement, { target: { value: 10 } });
