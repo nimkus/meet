@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const CitySearch = ({ allLocations, setCurrentCity }) => {
+const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [query, setQuery] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -23,6 +23,14 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
         : [];
 
       setSuggestions(filteredLocations);
+
+      let infoText;
+      if (filteredLocations.length === 0) {
+        infoText = 'We can not find the city you are looking for. Please try another city';
+      } else {
+        infoText = '';
+      }
+      setInfoAlert(infoText);
     } else {
       setIsValid(false); // Input is invalid
     }
@@ -33,6 +41,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
     setQuery(value);
     setShowSuggestions(false);
     setCurrentCity(value);
+    setInfoAlert('');
   };
 
   useEffect(() => {
@@ -62,46 +71,6 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
           </li>
         </ul>
       ) : null}
-      <style jsx>{`
-        .city {
-          width: 100%;
-          padding: 8px;
-          font-size: 16px;
-        }
-
-        .invalid {
-          border: 1px solid red;
-        }
-
-        .error-message {
-          color: red;
-          font-size: 14px;
-          margin-top: 4px;
-          margin-left: 2px;
-        }
-
-        .suggestions {
-          margin: 0;
-          padding: 0;
-          list-style: none;
-          background-color: white;
-          border: 1px solid #ccc;
-          position: absolute;
-          width: 100%;
-          z-index: 10;
-          max-height: 150px;
-          overflow-y: auto;
-        }
-
-        .suggestions li {
-          padding: 8px;
-          cursor: pointer;
-        }
-
-        .suggestions li:hover {
-          background-color: #f0f0f0;
-        }
-      `}</style>
     </div>
   );
 };
@@ -109,6 +78,7 @@ const CitySearch = ({ allLocations, setCurrentCity }) => {
 CitySearch.propTypes = {
   allLocations: PropTypes.arrayOf(PropTypes.string).isRequired,
   setCurrentCity: PropTypes.func.isRequired,
+  setInfoAlert: PropTypes.func.isRequired,
 };
 
 export default CitySearch;

@@ -15,6 +15,7 @@ const NumberOfEvents = ({ updateEvents }) => {
   return (
     <div id="number-of-events">
       <label htmlFor="number-input">Number of Events:</label>
+      <br />
       <input
         type="number"
         id="number-input"
