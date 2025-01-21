@@ -47,7 +47,6 @@ module.exports.getAuthURL = async () => {
 module.exports.getAccessToken = async (event) => {
   try {
     const code = decodeURIComponent(`${event.pathParameters.code}`);
-    console.log('Received code:', code);
 
     const token = await new Promise((resolve, reject) => {
       oAuth2Client.getToken(code, (error, response) => {
@@ -55,7 +54,6 @@ module.exports.getAccessToken = async (event) => {
           console.error('Token Error:', error);
           return reject(error);
         }
-        console.log('Token Response:', response);
         return resolve(response);
       });
     });
@@ -83,16 +81,12 @@ module.exports.getAccessToken = async (event) => {
 
 module.exports.getCalendarEvents = async (event) => {
   try {
-    console.log('Event parameters:', event.pathParameters);
     const access_token = decodeURIComponent(`${event.pathParameters.access_token}`);
-    console.log('Decoded access token:', access_token);
 
     oAuth2Client.setCredentials({ access_token });
 
     const events = await new Promise((resolve, reject) => {
       const now = new Date().toISOString();
-      console.log('Fetching events from:', now);
-      console.log('Using Calendar ID:', CALENDAR_ID);
 
       calendar.events.list(
         {
@@ -112,7 +106,6 @@ module.exports.getCalendarEvents = async (event) => {
             console.error('Invalid response structure:', response);
             return reject({ message: 'No events found or invalid response structure' });
           }
-          console.log('Found events:', response.data.items.length);
           return resolve(response);
         }
       );
