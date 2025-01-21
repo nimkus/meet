@@ -3,7 +3,12 @@
 const { google } = require('googleapis');
 const calendar = google.calendar('v3');
 const SCOPES = ['https://www.googleapis.com/auth/calendar.events.public.readonly'];
+
 const { CLIENT_SECRET, CLIENT_ID, CALENDAR_ID } = process.env;
+if (!CLIENT_SECRET || !CLIENT_ID || !CALENDAR_ID) {
+  throw new Error('Missing environment variables: CLIENT_SECRET, CLIENT_ID, or CALENDAR_ID');
+}
+
 const redirect_uris = ['https://meet-three-zeta.vercel.app'];
 
 const oAuth2Client = new google.auth.OAuth2(CLIENT_ID, CLIENT_SECRET, redirect_uris[0]);
