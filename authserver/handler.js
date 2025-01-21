@@ -79,10 +79,12 @@ module.exports.getCalendarEvents = async (event) => {
       },
       (error, response) => {
         if (error) {
-          reject(error);
-        } else {
-          resolve(response);
+          return reject({ message: 'Failed to fetch calendar events', error });
         }
+        if (!response || !response.data || !response.data.items) {
+          return reject({ message: 'No events found or invalid response structure' });
+        }
+        return resolve(response);
       }
     );
   })
