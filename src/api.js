@@ -44,7 +44,9 @@ const removeQuery = () => {
  */
 const getToken = async (code) => {
   const encodeCode = encodeURIComponent(code);
-  const response = await fetch('https://meet-three-zeta.vercel.app/api/token' + '/' + encodeCode);
+  const response = await fetch(
+    'https://ttx72bv27a.execute-api.eu-central-1.amazonaws.com/dev/api/token' + '/' + encodeCode
+  );
   const { access_token } = await response.json();
   access_token && localStorage.setItem('access_token', access_token);
 
@@ -70,7 +72,7 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery();
-    const url = 'https://meet-three-zeta.vercel.app/api/get-events' + '/' + token;
+    const url = 'https://ttx72bv27a.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' + '/' + token;
     const response = await fetch(url);
     const result = await response.json();
     if (result) {
@@ -91,7 +93,7 @@ export const getAccessToken = async () => {
     const searchParams = new URLSearchParams(window.location.search);
     const code = await searchParams.get('code');
     if (!code) {
-      const response = await fetch('https://meet-three-zeta.vercel.app/api/get-auth-url');
+      const response = await fetch('https://ttx72bv27a.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url');
       const result = await response.json();
       const { authUrl } = result;
       return (window.location.href = authUrl);
