@@ -26,7 +26,7 @@ const NumberOfEvents = ({ updateEvents, setErrorAlert }) => {
       <label htmlFor="number-input">Number of Events:</label>
       <br />
       <input
-        type="text"
+        type="number"
         id="number-input"
         aria-label="number of events"
         value={numberOfEvents}
