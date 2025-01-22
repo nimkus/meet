@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer';
 
-jest.setTimeout(80000);
+jest.setTimeout(50000);
 
 describe('show/hide an event details', () => {
   let browser;
@@ -9,7 +9,7 @@ describe('show/hide an event details', () => {
     browser = await puppeteer.launch({
       headless: false,
       slowMo: 250,
-      timeout: 80000,
+      timeout: 50000,
     });
     page = await browser.newPage();
     await page.goto('http://localhost:5173/');
