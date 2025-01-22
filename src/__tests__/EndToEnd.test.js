@@ -1,5 +1,7 @@
 import puppeteer from 'puppeteer';
 
+jest.setTimeout(80000);
+
 describe('show/hide an event details', () => {
   let browser;
   let page;
@@ -7,15 +9,15 @@ describe('show/hide an event details', () => {
     browser = await puppeteer.launch({
       headless: false,
       slowMo: 250,
-      timeout: 50000,
+      timeout: 80000,
     });
     page = await browser.newPage();
     await page.goto('http://localhost:5173/');
     await page.waitForSelector('.event');
   });
 
-  afterAll(() => {
-    browser.close();
+  afterAll(async () => {
+    await browser.close();
   });
 
   test('An event element is collapsed by default', async () => {
