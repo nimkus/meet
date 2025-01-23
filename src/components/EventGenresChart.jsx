@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { ResponsiveContainer, PieChart, Pie } from 'recharts';
+import { ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import PropTypes from 'prop-types';
 
 const EventGenresChart = ({ events }) => {
   const [data, setData] = useState([]);
 
   const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
+
+  const colors = ['#ACAAFE', '#00C49F', '#FFBB28', '#FF8042', 'white'];
 
   const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, percent, index }) => {
     const RADIAN = Math.PI / 180;
@@ -14,7 +16,7 @@ const EventGenresChart = ({ events }) => {
     const y = cy + radius * Math.sin(-midAngle * RADIAN) * 1.07;
     return percent ? (
       <text x={x} y={y} fill="#8884d8" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-        {`${genres[index]} ${(percent * 100).toFixed(0)}%`}
+        {`${(percent * 100).toFixed(0)}%`}
       </text>
     ) : null;
   };
@@ -45,6 +47,10 @@ const EventGenresChart = ({ events }) => {
           label={renderCustomizedLabel}
           outerRadius={130}
         />
+        {data.map((index) => (
+          <Cell key={`cell-${index}`} fill={colors[index]} />
+        ))}
+        <Legend align="center" verticalAlign="top" height={10} />
       </PieChart>
     </ResponsiveContainer>
   );
