@@ -7,7 +7,7 @@ const EventGenresChart = ({ events }) => {
 
   const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
 
-  const colors = ['#ACAAFE', '#00C49F', '#FFBB28', '#FF8042', 'white'];
+  const COLORS = ['#ACAAFE', '#00C49F', '#FFBB28', '#FF8042', 'white'];
 
   const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, percent }) => {
     const RADIAN = Math.PI / 180;
@@ -39,10 +39,18 @@ const EventGenresChart = ({ events }) => {
   return (
     <ResponsiveContainer width="99%" height={400}>
       <PieChart>
-        <Pie data={data} dataKey="value" labelLine={false} label={renderCustomizedLabel} outerRadius={130} />
-        {data.map((entry, index) => {
-          return <Cell key={`cell-${index}`} fill={colors[index]} />;
-        })}
+        <Pie
+          data={data}
+          dataKey="value"
+          labelLine={false}
+          fill="#8884d8"
+          label={renderCustomizedLabel}
+          outerRadius={130}
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index]} />
+          ))}
+        </Pie>
         <Legend align="center" verticalAlign="top" height={10} />
       </PieChart>
     </ResponsiveContainer>
