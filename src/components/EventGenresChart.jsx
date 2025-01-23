@@ -7,17 +7,27 @@ const EventGenresChart = ({ events }) => {
 
   const genres = ['React', 'JavaScript', 'Node', 'jQuery', 'Angular'];
 
-  const COLORS = ['#ACAAFE', '#00C49F', '#FFBB28', '#FF8042', 'white'];
+  const colors = ['#ACAAFE', '#00C49F', '#FFBB28', '#FF8042', 'white'];
 
-  const renderCustomizedLabel = ({ cx, cy, midAngle, outerRadius, percent }) => {
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
     const RADIAN = Math.PI / 180;
-    const radius = outerRadius;
-    const x = cx + radius * Math.cos(-midAngle * RADIAN) * 1.07;
-    const y = cy + radius * Math.sin(-midAngle * RADIAN) * 1.07;
+    const labelMultiplier = 1.09;
+    const radius = innerRadius + (outerRadius - innerRadius) * labelMultiplier;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    // On small screens, only display the percentage inside the pie
     return percent ? (
-      <text x={x} y={y} fill="#8884d8" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
+      <text
+        x={x}
+        y={y}
+        fill={colors[index]}
+        textAnchor={x > cx ? 'start' : 'end'}
+        dominantBaseline="central"
+        style={{ fontWeight: 'bold' }}
+        className="pie-label"
+        role="label"
+        data-testid={`genre-label-${genres[index]}`}
+      ></text>
     ) : null;
   };
 
@@ -39,10 +49,17 @@ const EventGenresChart = ({ events }) => {
   return (
     <ResponsiveContainer width="99%" height={400}>
       <PieChart>
-        <Pie data={data} dataKey="value" labelLine={false} label={renderCustomizedLabel} outerRadius={130} />
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index]} />
-        ))}
+        <Pie
+          data={data}
+          dataKey="value"
+          fill="#8884d8"
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={130}
+        />
+        {data.map((entry, index) => {
+          return entry.value > 0 ? <Cell key={`cell-${index}`} fill={colors[index]} /> : null;
+        })}
         <Legend align="center" verticalAlign="top" height={10} />
       </PieChart>
     </ResponsiveContainer>
