@@ -26,7 +26,7 @@ const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
 
       let infoText;
       if (filteredLocations.length === 0) {
-        infoText = 'We can not find the city you are looking for. Please try another city';
+        infoText = 'We cannot find the city you are looking for. Please try another city';
       } else {
         infoText = '';
       }
@@ -49,7 +49,7 @@ const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
   }, [`${allLocations}`]);
 
   return (
-    <div id="city-search" style={{ position: 'relative' }}>
+    <div id="city-search">
       <input
         type="text"
         className={`city ${isValid ? '' : 'invalid'}`}
@@ -57,20 +57,30 @@ const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert }) => {
         value={query}
         onFocus={() => setShowSuggestions(true)}
         onChange={handleInputChanged}
+        aria-expanded={showSuggestions} // Indicate if suggestions are visible
+        aria-autocomplete="list" // Indicate that suggestions are a list to the screen reader
+        aria-activedescendant={showSuggestions && query ? suggestions[0] : undefined} // Highlight the first suggestion
       />
       {!isValid && <p className="error-message">Please use only letters and spaces.</p>}
-      {showSuggestions ? (
-        <ul className="suggestions">
+      {showSuggestions && (
+        <ul className="suggestions" role="listbox" aria-live="polite" aria-label="List of city suggestions">
+          {' '}
+          {/* Announce changes */}
           {suggestions.map((suggestion) => (
-            <li onClick={handleItemClicked} key={suggestion}>
+            <li
+              onClick={handleItemClicked}
+              key={suggestion}
+              role="option" // This indicates each list item is an option
+              aria-selected={suggestion === query} // Highlight the selected suggestion
+            >
               {suggestion}
             </li>
           ))}
-          <li key="See all cities" onClick={handleItemClicked}>
+          <li key="See all cities" onClick={handleItemClicked} role="option">
             <b>See all cities</b>
           </li>
         </ul>
-      ) : null}
+      )}
     </div>
   );
 };
