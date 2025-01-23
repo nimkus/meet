@@ -38,12 +38,27 @@ const App = () => {
 
   return (
     <div className="App">
-      <div className="alerts-container">{infoAlert.length ? <InfoAlert text={infoAlert} /> : null}</div>
-      <div className="alerts-container">{errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}</div>
-      <div className="alerts-container">{warningAlert.length ? <WarningAlert text={warningAlert} /> : null}</div>
-      <CitySearch allLocations={allLocations} setCurrentCity={setCurrentCity} setInfoAlert={setInfoAlert} />
-      <NumberOfEvents updateEvents={setNumberOfEvents} setErrorAlert={setErrorAlert} />
-      <div className="charts-container">
+      <div className="alerts-container" role="alert" aria-live="assertive">
+        {infoAlert.length ? <InfoAlert text={infoAlert} /> : null}
+      </div>
+      <div className="alerts-container" role="alert" aria-live="assertive">
+        {errorAlert.length ? <ErrorAlert text={errorAlert} /> : null}
+      </div>
+      <div className="alerts-container" role="alert" aria-live="assertive">
+        {warningAlert.length ? <WarningAlert text={warningAlert} /> : null}
+      </div>
+      <CitySearch
+        allLocations={allLocations}
+        setCurrentCity={setCurrentCity}
+        setInfoAlert={setInfoAlert}
+        aria-label="City search input"
+      />
+      <NumberOfEvents
+        updateEvents={setNumberOfEvents}
+        setErrorAlert={setErrorAlert}
+        aria-label="Select number of events to display"
+      />
+      <div className="charts-container" aria-hidden="true">
         <EventGenresChart events={events} />
         <CityEventsChart allLocations={allLocations} events={events} />
       </div>
