@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import PropTypes from 'prop-types';
+import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 const CityEventsChart = ({ allLocations, events }) => {
   const [data, setData] = useState([]);
 
-  const getData = useCallback(() => {
-    return allLocations.map((location) => {
+  const getData = () => {
+    const data = allLocations.map((location) => {
       const count = events.filter((event) => event.location === location).length;
       const city = location.split(/, | - /)[0];
       return { city, count };
     });
-  }, [allLocations, events]);
+    return data;
+  };
 
   useEffect(() => {
     setData(getData());
-  }, [getData]);
+  }, [`${events}`, `${data}`]);
 
   return (
     <ResponsiveContainer width="99%" height={400}>
@@ -23,7 +24,7 @@ const CityEventsChart = ({ allLocations, events }) => {
         margin={{
           top: 20,
           right: 20,
-          bottom: 80,
+          bottom: 70,
           left: -30,
         }}
       >
