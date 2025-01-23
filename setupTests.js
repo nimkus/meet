@@ -17,7 +17,7 @@ console.error = (...args) => {
 };
 
 configure({ asyncUtilTimeout: 3000 });
-jest.setTimeout(30000);
+jest.setTimeout(50000);
 
 const { ResizeObserver } = window;
 
@@ -30,7 +30,7 @@ beforeEach(() => {
     disconnect: jest.fn(),
   }));
 });
-
+test;
 afterEach(() => {
   window.ResizeObserver = ResizeObserver;
   jest.restoreAllMocks();
